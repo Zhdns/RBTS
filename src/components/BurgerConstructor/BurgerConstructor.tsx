@@ -4,11 +4,10 @@ import {BurgerIcon, ListIcon, ProfileIcon, CurrencyIcon, LockIcon, DragIcon, Del
 import {useDrop } from 'react-dnd/dist/hooks/useDrop';
 import { useDrag } from 'react-dnd/dist/hooks/useDrag';
 import { itemTypes } from '../../utility/constants';
-import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { moveItem, addItem, submitOrder, emptyCart, removeItem } from '../../services/burgerCart-slice';
 import { IngredientGlobalType, ChildrenType } from '../../utility/types';
-import { AppDispatch } from '../../index';
+import { useDispatch, useSelector} from '../../index';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetail';
 import { TotalProps, ProductProps, ConstructorTemplateProps, StateIngredient, Login, IDraggedItem } from './BurgerConstructorTypes';
@@ -109,9 +108,9 @@ function BurgerConstructor() {
     const [items, setItems] = React.useState<IngredientGlobalType[]>([])
     const [totalPrice, setTotalPrice] = React.useState(0)
     const [onOpen, setOnOpen] =React.useState(false)
-    const bunItems = useSelector((state: StateIngredient) => state.cart.cart.bun)
-    const mainItems = useSelector((state: StateIngredient) => state.cart.cart.main)
-    const dispatch = useDispatch<AppDispatch>();
+    const bunItems = useSelector((state) => state.cart.cart.bun)
+    const mainItems = useSelector((state) => state.cart.cart.main)
+    const dispatch = useDispatch();
     const bunIsEmpty = bun.length === 0
     const isLogin = useSelector((state: Login) => state.isLogin.isLogin)
     const navigate = useNavigate()

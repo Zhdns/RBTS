@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, Action } from "@reduxjs/toolkit";
 import { MultipleReceivedOrders} from "../utility/types";
 
 
-interface WebSocketInterface {
+export interface WebSocketInterface {
     orders: MultipleReceivedOrders;
     connected: boolean;
 }

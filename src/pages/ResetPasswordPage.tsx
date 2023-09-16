@@ -1,12 +1,10 @@
-import { EmailInput, Input, ShowIcon, HideIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from "../index";
+import {  Input,  Button } from "@ya.praktikum/react-developer-burger-ui-components"
+import React, { useState, useEffect} from 'react';
 import './styles.css'
-import { Link, useNavigate, useLocation, NavLink} from "react-router-dom";
-import {  setStatusProfile } from "../services/setLoginPageStatus";
-import { useSelector, useDispatch } from 'react-redux';
-import { LOG_IN, REGISTRATION, FORGOT_PASSWORD, RESET_PASSWORD, PROFILE, TOKEN, REFRESH_TOKEN, PASSWORD, ISLOGIN, USER} from "../utility/constants";
-import { authorization, setUser, resetPasswordAction, setUserEmail, setUserName, logout, resetPassword} from "../services/isLogin";
-import { AppDispatch } from "../index";
+import { Link, useNavigate} from "react-router-dom";
+import { resetPassword} from "../services/isLogin";
+
 
 type ResetPasswordProps = {
     submit: () => void;
@@ -74,7 +72,7 @@ function ResetPasswordPage() {
     const [errorPass, setErrorPass] = useState('')
     const latinLetters =/^[A-Za-z0-9_.]+$/;
     const [resetPass, setResetPass] = useState('')
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
 

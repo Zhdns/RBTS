@@ -1,12 +1,9 @@
-import { EmailInput, Input, ShowIcon, HideIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components"
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.css'
-import { Link, useNavigate, useLocation, NavLink} from "react-router-dom";
-import {  setStatusProfile } from "../services/setLoginPageStatus";
-import { useSelector, useDispatch } from 'react-redux';
-import { LOG_IN, REGISTRATION, FORGOT_PASSWORD, RESET_PASSWORD, PROFILE, TOKEN, REFRESH_TOKEN, PASSWORD, ISLOGIN, USER} from "../utility/constants";
-import { authorization, setUser, resetPasswordAction, setUserEmail, setUserName, registration } from "../services/isLogin";
-import { AppDispatch } from "../index";
+import { Link, useNavigate} from "react-router-dom";
+import {registration } from "../services/isLogin";
+import { useDispatch } from "../index";
 
 type RegistrationProps = {
     submit: () => void;
@@ -103,7 +100,7 @@ function RegistrationPage() {
     const [errorName, setErrorName] = useState('')
     const [isRegistrationValid, setIsRegistrationValid] = useState(false)
     const latinLetters =/^[A-Za-z0-9_.]+$/;
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const [isNewPassValid, setIsNewPassValid] = useState(true)
     

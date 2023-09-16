@@ -1,17 +1,15 @@
-import React, { useEffect } from 'react'
-import Modal from '../Modal/Modal.jsx'
+
 import style from './OrderDetails.module.css'
 import orderConfirmGIF from '../../images/orderConfirm.gif'
 import loader from '../../images/loader.gif'
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../index';
 import { ISPENDING } from '../../utility/constants'
 import { Cart } from './OrderDetailsTypes.js'
 
 
 const OrderDetails = () => {
     
-    const orderNumber = useSelector((state: Cart) => state.cart.orderNumber)
+    const orderNumber = useSelector((state) => state.cart.orderNumber)
 
     const isDone = ` ${style.number} text text_type_digits-large`
     const isPending = ` ${style.number} text text_type_main-large`

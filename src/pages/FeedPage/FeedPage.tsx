@@ -1,18 +1,15 @@
-import { EmailInput, Input, ShowIcon, HideIcon, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import React, { useState, useEffect, useRef, useCallback, ReactNode } from 'react';
-import { Link, useNavigate, useLocation, NavLink} from "react-router-dom";
-import {  setStatusProfile } from "../../services/setLoginPageStatus";
-import { useSelector, useDispatch} from 'react-redux';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import  { useState, useEffect,  useCallback, ReactNode } from 'react';
+import { useNavigate, useLocation} from "react-router-dom";
+// import { useSelector} from 'react-redux';
+import { useDispatch, useSelector } from '../../index';
 import style  from './FeedPage.module.css';
-import { setData } from "../../services/appSlice";
-import { wsConnecting, wsDisconnected } from "../../services/middlewareReducer";
+import { wsConnecting} from "../../services/middlewareReducer";
 import loader from '../../images/loader.gif'
 import { addDetails} from "../../services/orderDetails-slice";
 import Modal from "../../components/Modal/Modal";
 import OrderDetailsPage from "../OrderDetailPage/OrderDetailPage";
 import { ORDERID, ORDERMODAL } from "../../utility/constants";
-import { IngredientGlobalType } from "../../utility/types";
-import { AppDispatch } from "../../index";
 import { AppState, OrderProps, IngredientPictureProps, WebSocketState, NewIdType, ChildrenType } from "../../utility/types";
 import { OrdersOnProcessProps, NumberOfOrderProps } from "./FeedPageTypes";
 
@@ -49,7 +46,7 @@ function IngredientPicture(props: IngredientPictureProps) {
             <img src={props.img} className={style.ingredientPicture} style={props.imageOpacity}/>
             <div className={style.count}>
             {/* <div className={style.count}> */}
-                <p className="text text_type_main-default" style={{margin: '0'}}>{props.count}</p>
+                <p className={`text text_type_main-default ${style.ingredientPictureMargin}`} >{props.count}</p>
             </div>
         </div>
     )
@@ -102,16 +99,16 @@ function OrdersOnProcess(props: OrdersOnProcessProps) {
     }
 
 function FeedPage() {
-    const orders = useSelector((state: WebSocketState) => state.webSocket.orders) || { orders: [] }
-    const mainData = useSelector((state: AppState) => state.app.data.data)
-    const connected = useSelector((state: WebSocketState) => state.webSocket.connected) 
+    const orders = useSelector((state) => state.webSocket.orders) || { orders: [] }
+    const mainData = useSelector((state) => state.app.data)
+    const connected = useSelector((state) => state.webSocket.connected) 
     const [data, setData] = useState<NewIdType[]>([])
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(JSON.parse(localStorage.getItem(ORDERMODAL)!) || false)
     const location = useLocation()
 
-    console.log(localStorage.getItem(ORDERMODAL))
+   
 
     const updateData = useCallback(() => {
         if (connected && orders && orders.orders) {

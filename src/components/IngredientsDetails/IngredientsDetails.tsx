@@ -1,27 +1,23 @@
 import style from './IngredientsDetails.module.css'
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../index';
 import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { IngredientGlobalType } from '../../utility/types';
 import { AppState } from '../BurderIngredients/BurgerIngredientsTypes';
 import { RootState } from './IngredientDetailsTypes';
 
 
 const IngredientsDetails = () => {
 
-    const idModal = useSelector((state: RootState) => state.details.id)
+    const idModal = useSelector((state) => state.details.id)
     const location = useLocation()
     const {id} = useParams() as {id: string}
-    console.log(id)
-    console.log(location)
-    const ingredient = useSelector((state: AppState) => state.app.data.data?.find(ing => ing._id === (idModal || id)))
+    const ingredient = useSelector((state) => state.app.data?.find(ing => ing._id === (idModal || id)))
     let background = location.state && location.state.background
-    // let background = (location.state as LocationState)?.background;
+
 
     
 
     if (!ingredient) {
-        console.log('null')
         return null;
     }
 

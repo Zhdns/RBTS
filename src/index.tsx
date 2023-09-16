@@ -16,9 +16,13 @@ import middlewareReducer from './services/middlewareReducer';
 import listenerMiddleware from './services/middleware';
 import orderDetails from './services/orderDetails-slice';
 import { useDispatch as useReduxDispatch } from 'react-redux';
+import { useSelector as useReduxSelector } from 'react-redux';
+import { TypedUseSelectorHook } from 'react-redux';
 
-export type AppDispatch = typeof store.dispatch;
+type AppDispatch = typeof store.dispatch;
+type RootState = ReturnType<typeof store.getState>
 export const useDispatch = () => useReduxDispatch<AppDispatch>();
+export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
 
 const store = configureStore({
   reducer: {

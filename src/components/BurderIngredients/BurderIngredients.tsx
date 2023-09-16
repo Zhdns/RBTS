@@ -5,7 +5,8 @@ import { RefObject, MutableRefObject, useEffect, RefCallback, useState} from 're
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useDrag, DragSourceMonitor } from 'react-dnd';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector} from 'react-redux';
+import { useDispatch, useSelector } from '../../index';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { IngredientGlobalType } from '../../utility/types';
 import { INGREDIENTMODAL, IDFORMODAL } from '../../utility/constants';
@@ -102,11 +103,10 @@ function BurgerIngredients() {
     const [bun, setBun] = React.useState<IngredientGlobalType[]>([]);
     const [main, setMain] = React.useState<IngredientGlobalType[]>([]);
     const [sauce, setSauce] = React.useState<IngredientGlobalType[]>([]);
-    // const [onOpen, setOnOpen] = React.useState<boolean>(JSON.parse(localStorage.getItem(INGREDIENTMODAL) || "false"));
-    const [onOpen, setOnOpen] = React.useState<boolean>(false);
-    const data = useSelector((state: AppState) => state.app.data.data);
-    const items = useSelector((state: RootState) => state.cart.cart.main);
-    const bunItems = useSelector((state: RootState) => state.cart.cart.bun);
+    const [onOpen, setOnOpen] = React.useState<boolean>(JSON.parse(localStorage.getItem(INGREDIENTMODAL) || "false"));
+    const data = useSelector((state) => state.app.data);
+    const items = useSelector((state) => state.cart.cart.main);
+    const bunItems = useSelector((state) => state.cart.cart.bun);
     const dispatch = useDispatch()
     const navigate = useNavigate(); 
     const location = useLocation()     
@@ -126,14 +126,12 @@ function BurgerIngredients() {
 
     useEffect(() => {
         if (Array.isArray(data)) {
-          console.log(data);
           const bun = data.filter(item => item.type === 'bun');
           const main = data.filter(item => item.type === 'main');
           const sauce = data.filter(item => item.type === 'sauce');
           setBun(bun);
           setMain(main);
           setSauce(sauce);
-          console.log(bun)
         }
       }, [data]);
 
@@ -145,8 +143,6 @@ function BurgerIngredients() {
           }
 
           const togglePopup = (ingredient: IngredientGlobalType) => {
-
-            console.log('isToggle')
             dispatch(showDetails(ingredient._id))
             localStorage.setItem(IDFORMODAL, ingredient._id)
             setOnOpen(true)
@@ -155,7 +151,6 @@ function BurgerIngredients() {
         }
 
         const handleClosePopup = () => {
-            console.log('modalIsClosed')
             localStorage.setItem(INGREDIENTMODAL, JSON.stringify(false))
             setOnOpen(false)
             localStorage.removeItem(IDFORMODAL)

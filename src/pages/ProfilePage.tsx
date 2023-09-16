@@ -1,13 +1,10 @@
-import { EmailInput, Input, ShowIcon, HideIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+import { Input } from "@ya.praktikum/react-developer-burger-ui-components"
 import React, { useState, useEffect, useRef, RefObject } from 'react';
 import './styles.css'
-import { Link, useNavigate, useLocation, NavLink} from "react-router-dom";
-import {  setStatusProfile } from "../services/setLoginPageStatus";
-import { useSelector, useDispatch } from 'react-redux';
-import { LOG_IN, REGISTRATION, FORGOT_PASSWORD, RESET_PASSWORD, PROFILE, TOKEN, REFRESH_TOKEN, PASSWORD, ISLOGIN, USER} from "../utility/constants";
+import { useNavigate, NavLink} from "react-router-dom";
+import { REFRESH_TOKEN, PASSWORD} from "../utility/constants";
 import { setUserEmail, setUserName, logout, editProfile } from "../services/isLogin";
-import { wsConnecting, wsDisconnected } from "../services/middlewareReducer";
-import { AppDispatch } from "../index";
+import { useDispatch, useSelector } from "../index";
 import { IsLogin } from "../utility/types";
 
 type ProfileProps = {
@@ -28,7 +25,7 @@ type ProfileProps = {
     disabledEmail: boolean;
     revealPass: any;
     pass: string;
-    userOrders: () => void;
+    userOrders?: () => void;
     logout: () => void;
   }
 
@@ -111,14 +108,13 @@ function ProfilePage() {
     const emailRef = useRef<HTMLInputElement>(null);
     const [errorEmail, setErrorEmail] = useState('')
     const [name, setName] = useState('')
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch()
     const navigate = useNavigate(); 
-    const userName = useSelector((state: IsLogin) => state.isLogin.user.name)
-    const userEmail = useSelector((state: IsLogin) => state.isLogin.user.email)
+    const userName = useSelector((state) => state.isLogin.user.name)
+    const userEmail = useSelector((state) => state.isLogin.user.email)
     const [newName, setNewName] = useState(false)
     const [newEmail, setNewEmail] = useState(false) 
-    const user = useSelector((state: IsLogin) => state.isLogin.user)
-    const serverError = useSelector((state: IsLogin) => state.isLogin.error)
+    const user = useSelector((state) => state.isLogin.user)
     
 
     useEffect(() => {
@@ -169,14 +165,14 @@ function ProfilePage() {
             console.error("Error:", error)
         }
     }
-    const connectingToUserOrders = () => {
-            dispatch(wsDisconnected())
-            let token = localStorage.getItem(TOKEN)!
-            token = token.replace('Bearer ', '')
-            const url = `wss://norma.nomoreparties.space/orders?token=${token}`
-            dispatch(wsConnecting(url))
+    // const connectingToUserOrders = () => {
+    //         dispatch(wsDisconnected())
+    //         let token = localStorage.getItem(TOKEN)!
+    //         token = token.replace('Bearer ', '')
+    //         const url = `wss://norma.nomoreparties.space/orders?token=${token}`
+    //         dispatch(wsConnecting(url))
 
-    }
+    // }
 
 
     return (
@@ -197,7 +193,7 @@ function ProfilePage() {
         validEmail={validEmail ? false : true}
         errorEmail={errorEmail}
         emailRef={emailRef}
-        userOrders={() => connectingToUserOrders()}
+        // userOrders={() => connectingToUserOrders()}
         />
     )
 }

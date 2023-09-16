@@ -1,17 +1,15 @@
-import { EmailInput, Input, ShowIcon, HideIcon, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import { useState, useEffect} from 'react';
 import '../styles.css'
 import style from './ProfileFeedPage.module.css'
-import { Link, useNavigate, useLocation, NavLink} from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useLocation, NavLink} from "react-router-dom";
+import { useDispatch, useSelector } from '../../index';
 import {TOKEN, REFRESH_TOKEN, ORDERID, ORDERMODAL} from "../../utility/constants";
-import { authorization, setUser, resetPasswordAction, setUserEmail, setUserName, logout, editProfile,} from "../../services/isLogin";
+import { logout} from "../../services/isLogin";
 import { wsConnecting } from "../../services/middlewareReducer";
 import loader from '../../images/loader.gif'
 import { addDetails } from "../../services/orderDetails-slice";
 import Modal from "../../components/Modal/Modal";
-import { AppDispatch } from "../../index";
-import { IngredientGlobalType } from "../../utility/types";
 import OrderDetailsPage from "../OrderDetailPage/OrderDetailPage";
 import { OrderProps, IngredientPictureProps, ChildrenType, WebSocketState, AppState, NewIdType } from "../../utility/types";
 import { NavProps } from "./ProfileFeedPageTypes";
@@ -106,11 +104,11 @@ function Loader() {
 }
 
 function ProfileFeedPage() { 
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch()
     const navigate = useNavigate(); 
-    const orders = useSelector((state: WebSocketState) => state.webSocket.orders)
-    const mainData = useSelector((state: AppState) => state.app.data.data)
-    const connected = useSelector((state: WebSocketState) => state.webSocket.connected) 
+    const orders = useSelector((state) => state.webSocket.orders)
+    const mainData = useSelector((state) => state.app.data)
+    const connected = useSelector((state) => state.webSocket.connected) 
     const [data, setData] = useState<NewIdType[]>([])
     const [isOpen, setIsOpen] = useState(JSON.parse(localStorage.getItem(ORDERMODAL)!) || false)
     const location = useLocation()

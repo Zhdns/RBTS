@@ -49,8 +49,7 @@ const initialState: Cart = {
 
 export const submitOrder = createAsyncThunk<OrederResponse, void, { state: { cart: Cart }, rejectValue: any }>(
     "cart/submitOrder", 
-    async(_, {getState, rejectWithValue}) => {
-        try {
+    async(_, {getState}) => {
             const {bun, main} = getState().cart.cart
             const ingredientsIds = [...bun, ...bun,  ...main].map((item) => item._id)
             const token = localStorage.getItem(TOKEN) || ''
@@ -62,10 +61,7 @@ export const submitOrder = createAsyncThunk<OrederResponse, void, { state: { car
                 },
                 body: JSON.stringify({ ingredients: ingredientsIds }),
             });
-        } catch (err) {
-            return rejectWithValue(err);
-        }
-    }
+        } 
 );
 
 const buregerCart = createSlice({

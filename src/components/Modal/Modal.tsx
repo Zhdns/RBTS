@@ -1,5 +1,4 @@
 import { CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import React, { Children, useEffect, FC} from 'react'
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
 import style from './Modal.module.css'
 import { ModalType } from './ModalTypes'
@@ -8,7 +7,7 @@ import { ModalType } from './ModalTypes'
 
 function Modal ({title, children, handleClose} : ModalType)  {
 
-    console.log(children)
+    
 
     return (
         <ModalOverlay  onClick={handleClose}>

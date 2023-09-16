@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from '../../index';
 import style from './OrderDetailPage.module.css'
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useParams } from "react-router-dom";
 import { useEffect, useState, ReactNode } from "react";
 import loader from '../../images/loader.gif'
-import { wsConnecting } from "../../services/middlewareReducer";
 import { IngredientGlobalType } from "../../utility/types";
 import { ChildrenType, WebSocketState, AppState, OrderType } from "../../utility/types";
 import { DetailsState, IngredientProps } from "./OrderDetailPageTypes";
@@ -43,14 +42,14 @@ function Loader() {
 function OrderDetailsPage() {
 
 
-    const connected = useSelector((state: WebSocketState) => state.webSocket.connected)  
-    const idModal = useSelector((state: DetailsState) => state.orderDetails.id)
+    const connected = useSelector((state) => state.webSocket.connected)  
+    const idModal = useSelector((state) => state.orderDetails.id)
     const {id} = useParams()
     const [data, setData] = useState<IngredientGlobalType[]>([])
-    const orders = useSelector((state: WebSocketState) => state.webSocket.orders.orders) || [];
+    const orders = useSelector((state) => state.webSocket.orders.orders) || [];
     const [order, setOrder] = useState<OrderType | null>(null)
     const [ingredients, setIngredients] = useState<string[]>([])
-    const mainData = useSelector((state: AppState) => state.app.data.data)
+    const mainData = useSelector((state: AppState) => state.app.data)
 
 
     

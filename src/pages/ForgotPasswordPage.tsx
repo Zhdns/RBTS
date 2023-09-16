@@ -2,9 +2,9 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.css'
 import { Link, useNavigate} from "react-router-dom";
-import {  useDispatch } from 'react-redux';
+import { useDispatch } from "../index";
 import { forgotPassword } from "../services/isLogin";
-import { AppDispatch } from "..";
+
 
 type ForgotPasswordProps = {
     setEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -57,7 +57,7 @@ function ForgotPasswordPage() {
     const emailRef = useRef<HTMLInputElement>(null)
     const [errorEmail, setErrorEmail] = useState('')
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch()
 
 
     useEffect(() => {

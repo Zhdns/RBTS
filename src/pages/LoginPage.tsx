@@ -1,12 +1,9 @@
-import { EmailInput, Input, ShowIcon, HideIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+import {  Input, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.css'
-import { Link, useNavigate, useLocation, NavLink} from "react-router-dom";
-import {  setStatusProfile } from "../services/setLoginPageStatus";
-import { useSelector, useDispatch } from 'react-redux';
-import {REFRESH_TOKEN} from "../utility/constants";
+import { Link, useNavigate} from "react-router-dom"
+import { useDispatch, useSelector } from "../index";
 import {  login} from "../services/isLogin";
-import { AppDispatch } from "../index";
 import { IsLogin } from "../utility/types";
 
 
@@ -83,8 +80,8 @@ function LoginPage() {
     const [validEmail, setValidEmail] = useState(true)
     const emailRef = useRef<HTMLInputElement>(null);
     const [errorEmail, setErrorEmail] = useState('')
-    const serverError = useSelector((state: IsLogin) => state.isLogin.error)
-    const dispatch = useDispatch<AppDispatch>()
+    const serverError = useSelector((state) => state.isLogin.error)
+    const dispatch = useDispatch()
     const navigate = useNavigate(); 
 
 

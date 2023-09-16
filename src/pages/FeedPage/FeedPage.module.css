@@ -156,3 +156,7 @@
                  0 0 30px rgba(51, 51, 255, 0.25);
     color: rgba(242, 242, 243, 1);
 }
+
+.ingredientPictureMargin {
+    margin: 0;
+}

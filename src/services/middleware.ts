@@ -9,7 +9,7 @@ interface ListenerApi extends MiddlewareAPI<Dispatch<AnyAction>, any> {
 
 const listenerMiddleware = createListenerMiddleware();
 
-let socket: any = null;
+let socket: WebSocket | null = null;
 
 listenerMiddleware.startListening({
     actionCreator: wsConnecting,

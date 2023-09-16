@@ -1,7 +1,6 @@
 
 import AppHeader from '../AppHeader/AppHeader'
 import {useEffect, useCallback } from 'react';
-import {  useSelector } from 'react-redux';
 import { getData } from '../../services/appSlice';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -17,8 +16,9 @@ import LoginPage from '../../pages/LoginPage';
 import FeedPage from '../../pages/FeedPage/FeedPage';
 import ProfileFeedPage from '../../pages/ProfileFeedPage/ProfileFeedPage';
 import OrderDetailsPage from '../../pages/OrderDetailPage/OrderDetailPage';
-import { AppDispatch } from '../../index';
-import { useDispatch } from '../../index';
+import { useDispatch, useSelector } from '../../index';
+import { wsConnecting, wsDisconnected } from '../../services/middlewareReducer'
+import { TOKEN } from '../../utility/constants'
 
 
 
@@ -39,12 +39,32 @@ type IsLogin = {
 function App() {
 
   const dispatch = useDispatch();
-  const isLogin = useSelector((state: IsLogin) => state.isLogin.isLogin);
-  const resetPass = useSelector((state: IsLogin) => state.isLogin.resetPasswordState)
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+  const resetPass = useSelector((state) => state.isLogin.resetPasswordState)
   const location = useLocation()
   const background = location.state && location.state.background
-  // let background = (location.state as LocationState)?.background;
+  const pathname: string = location.pathname
+  
 
+  useEffect(() => {
+    if (pathname.startsWith('/feed')) {
+        dispatch(wsDisconnected())
+        dispatch(wsConnecting('wss://norma.nomoreparties.space/orders/all'))
+    }
+    else if (pathname.startsWith('/profile/orders/')) {
+        let token: string | null = localStorage.getItem(TOKEN)
+        if (token === null) {
+        } else {
+            token = token.replace('Bearer ', '')
+            const url = `wss://norma.nomoreparties.space/orders?token=${token}`
+            dispatch(wsDisconnected())
+            dispatch(wsConnecting(url))
+        }
+    }
+    else {
+        dispatch(wsDisconnected())
+    }
+}, [pathname])
 
   
   

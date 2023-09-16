@@ -5,7 +5,7 @@ type ListOfIngedientsId = string[]
 interface SingleRecivedOrder {
     _id: string;
     ingredients: ListOfIngedientsId;
-    status: string;
+    status: "done" | "pending" | "created";
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -85,9 +85,7 @@ export type WebSocketState = {
 
 export   type AppState = {
     app: {
-        data : {
             data: IngredientGlobalType[]
-    }
         }
         
 }
